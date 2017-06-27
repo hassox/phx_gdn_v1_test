@@ -1,0 +1,15 @@
+<div class="jumbotron">
+  <h2><%= gettext "Welcome to %{name}!", name: "Guardian" %></h2>
+  <p class="lead">A flexible authentication library</p>
+  <h3>
+    <ul class="list-unstyled">
+      <%= if current_user(@conn) do %>
+        <li><%= link("List users", to: user_path(@conn, :index)) %></li>
+        <li><%= link("Logout", to: auth_path(@conn, :logout), method: :post) %></li>
+      <% else %>
+        <li><%= link("Create a user", to: user_path(@conn, :new)) %></li>
+        <li><%= link("Login", to: page_path(@conn, :login)) %></li>
+      <% end %>
+    </ul>
+  </h3>
+</div>

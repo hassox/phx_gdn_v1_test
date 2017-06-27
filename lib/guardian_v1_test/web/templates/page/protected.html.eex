@@ -1,0 +1,2 @@
+<h1>Hai <%= @current_user.email %></h1>
+<p>Welcome to the protected area</p>
