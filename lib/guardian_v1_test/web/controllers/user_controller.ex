@@ -4,6 +4,8 @@ defmodule GuardianV1Test.Web.UserController do
   alias GuardianV1Test.Accounts
   alias GuardianV1Test.Guardian.Plug, as: GPlug
 
+  plug Guardian.Plug.Pipeline, error_handler: __MODULE__
+
   # Adding this permission stuff just to test it out
   # it's not really useful in this controller as implemented
   plug Guardian.Permissions.Bitwise, [ensure: %{admin: [:read]}] when action in [:show, :index]
@@ -62,5 +64,11 @@ defmodule GuardianV1Test.Web.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
+  end
+
+  def auth_error(conn, {kind, _}, _opts) do
+    conn
+    |> put_flash(:error, "#{kind} - Cannot access")
+    |> redirect(to: "/")
   end
 end
